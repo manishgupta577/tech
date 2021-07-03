@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<!-- saved from url=(0033)http://www.technologyportage.com/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" xmlns:og="http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=1024">
+    
+  <meta name="description" content="Check out this GoDaddy hosted webpage! http://technologyportage.com.">
+  <meta property="og:title" content="Technology Portage">
+  <meta property="og:description" content="Check out this GoDaddy hosted webpage! http://technologyportage.com.">
+  
+    <meta property="og:image" content="http://nebula.wsimg.com/obj/OUFDOEVDMzlGMjI3NEE3QzZCQTg6MDJkOWM0NmM0Y2Y5Zjg4NjEwMDY5YmMxYThhMjYxNjY=">
+    <link rel="image_src" href="http://nebula.wsimg.com/obj/OUFDOEVDMzlGMjI3NEE3QzZCQTg6MDJkOWM0NmM0Y2Y5Zjg4NjEwMDY5YmMxYThhMjYxNjY=">
+  
+    <meta property="og:image" content="http://imagesak.websitetonight.com/skins/pl.gd/images/logo1.gif">
+  
+
+    <link rel="shortcut icon" type="image/ico" href="http://img1.wsimg.com/ip/v1.2.18/images/favicon.ico">
+    <link rel="icon" type="image/png" href="http://img1.wsimg.com/ip/v1.2.18/images/favicon.jpg">
+    <title>
+    Technology Portage
+</title>
+    
+  	<link href="./Technology Portage_files/ss-1.0.0.0.css" rel="stylesheet" type="text/css">
+    
+    
+  
+
+    <script type="text/javascript" src="./Technology Portage_files/jquery.js.download"></script>
+    <script type="text/javascript" src="./Technology Portage_files/jquery-ui.js.download"></script>
+
+    <script src="./Technology Portage_files/ss-merged-1.0.0.0.js.download" type="text/javascript"></script>
+
+    <script type="text/javascript" src="./Technology Portage_files/cygnus-duel.js.download"></script>
+
+    
+
+<script type="text/javascript">// <![CDATA[
+    $j(document).ready( function() {
+        // ---- Configure the application settings for communicating with Cygnus.
+        $c.Stage.applicationEventHandlerElement = $j("#page");
+
+        var appSettings = $c.Stage.applicationSettings;
+        appSettings.showConfigControl = false;
+        appSettings.showToggleControl = false;
+        appSettings.showCloseControl = true;
+        appSettings.hideCloseControlOnEdit = true;
+        appSettings.widgetActions.closeControlClick = function (widgetId, widgetType) {
+            // this will hide the widget since it's already open
+            $ss.showWidget(widgetId, $j(".ss-service[wid='" + widgetId + "']"));
+        };
+        appSettings.widgetEvents.saveConfigSuccess = 
+        function(widgetId, widgetType) {
+            var li = $j("li:has(a[wid='" + widgetId + "'])");
+            if (li.length > 0)
+            {
+                li.show();
+                li.find("a").removeClass("uninitialized");
+                $ss.showLauncher();
+                $ss.showSavedConfirmation('App saved successfully.');
+            }
+            else
+            {
+                if (widgetType == "fbpage")
+                {
+                    $ss.showSavedConfirmation('Facebook Page saved successfully.');
+                }
+            }
+        };
+        appSettings.widgetEvents.saveConfigFailure =
+            function(widgetId, widgetType) {
+                //alert("failed!");
+            };
+        appSettings.widgetEvents.cancelledConfig = 
+            function(widgetId, widgetType) {
+                var a = $j("a[wid='" + widgetId + "']");
+                if (a.hasClass("uninitialized"))
+                {
+                    //close the widget since it's already open if it's not be initialized.
+                    $ss.showWidget(widgetId, $j(".ss-service[wid='" + widgetId + "']"));
+                    $ss.openAdminPanel('widgets');
+                }
+            };
+        appSettings.widgetEvents.openedConfig = 
+            function(widgetId, widgetType)
+            {
+                if (widgetType != "fbpage")
+                {
+                    // close tabs
+                    $ss.hideAdminPanel();
+                }
+            };
+        appSettings.widgetEvents.closedConfig = 
+            function(widgetId, widgetType)
+            {
+                if (widgetType == "fbpage")
+                {
+                    $ss.facebookPage.close(widgetId);
+                }
+            };
+        appSettings.widgetEvents.dataModified = 
+            function(widgetId, widgetType, data) {
+                if ($j.isPopulated(data))
+                {
+                    if (widgetType == "fbpage")
+                    {
+                        $j('.widget-fbpage-title').text(data.Title.value);
+                    }
+                    else
+                    {
+                        var a = $j("#ss-launcher").find("a[wid=" + widgetId + "]");
+                        var children = a.children();
+                        a
+                            .text(data.LinkTitle.value)
+                            .append(children);
+                        $j("#widgets-added-list").find("li[wid=" + widgetId + "] .widget-added-label-title").text(data.LinkTitle.value);
+                    }
+                }
+            };
+        appSettings.widgetEvents.revealed =
+            function(widgetId, widgetType) {
+                if ($j.isFunction($ss.stage.layout.revealed)) $ss.stage.layout.revealed();
+            };
+        appSettings.widgetEvents.obscured = 
+            function(widgetId, widgetType) {
+                if ($j.isFunction($ss.stage.layout.obscured)) $ss.stage.layout.obscured();
+            };
+
+        appSettings.widgetEvents.widgetModalDisplayed = 
+        appSettings.widgetEvents.contentUpdated =
+          function(wigetId, widgetType) { $ss.fixPalette(); };
+
+        appSettings.applicationUtilityProviders.getImages = function(widgetId, success, failure)
+        {
+            // show a dialog for the user to select images that were uploaded as backgrounds
+            // one day maybe we can change this to be a uploader instead.
+            $ss.facebookPage.gatherImages(null, function(result) {
+                // if the user closed the dialog
+                if (result)
+                {
+                    success(result.images);
+                }
+                else  // do the failure callback otherwise.
+                {
+                    failure({ error: 'Error', message: 'Unable to get images.' });
+                }
+            });
+        }
+
+        appSettings.baseWidgetColors = {
+            background: '#16044E',
+            textTitle:  '#EA8B3B',
+            textContent: '#44D3D1',
+            textLinks:  '#B1CD3C',
+            borderTitle:  '#B1CD3C'
+        };
+
+        appSettings.applicationEvents.colorsChanged = "widgets.colorsChanged";
+
+        appSettings.widgetInitializeOptions.fbpage = { hideFacebookConnectDisplay: true };
+
+        appSettings.modalContainerCssClass ="modal-container";
+
+        $c.CommManager.applicationData = { "domainName": "technologyportage.com" };
+
+        // ---- DONE application setting configuration
+            
+        // load/style the page and all it's components            
+        $ss = SimpleSite({
+            basePath: "/",
+            cdnImagePath: "http://img1.wsimg.com/ip/v1.2.18/images/",
+            cdnCssPath: "http://img1.wsimg.com/ip/v1.2.18/style/",
+            eventReceiver: "#page",
+            background: {"id":767463,"originalSrc":"https://nebula.wsimg.com/obj/OUFDOEVDMzlGMjI3NEE3QzZCQTg6NjMxZmZlOWExMzgyNTFjNjhiYzhhOTQxNGJkNjM5NTY=","src":"https://nebula.wsimg.com/obj/OUFDOEVDMzlGMjI3NEE3QzZCQTg6NDIyMzg1Njk3YzY0MWY1NmZkODE4NzYwOTRiM2VhNzU=","thumbnail":"https://nebula.wsimg.com/obj/OUFDOEVDMzlGMjI3NEE3QzZCQTg6MDJkOWM0NmM0Y2Y5Zjg4NjEwMDY5YmMxYThhMjYxNjY=","orientation":"3","variation":"bl","isUserOwner":true,"cropHistory":null,"stockBackgroundId":416,"isUncropped":true},
+            layout: {"id":7,"name":"Top Menu","type":"3","variation":"c","VariationName":"Centered"},
+            layoutControls:
+            {
+                content: '#ss-main',
+                title: '#ss-name',
+                description: '#ss-description',
+                launcher: '#ss-launcher',
+                page: '#page',
+                widgetContainer: '#ss-widgetContainer',
+                about: '#ss-about',
+                background: '#ss-background'                    
+            },
+            palette: {
+  "id": 40,
+  "name": null,
+  "userCreated": false,
+  "isActive": true,
+  "backgrounds": {
+    "page": "#950908",
+    "main": "#16044E",
+    "meta": "#950908",
+    "block": "#16044E"
+  },
+  "fonts": {
+    "title": "#EA8B3B",
+    "description": "#44D3D1",
+    "services": "#B1CD3C",
+    "primary": "#EA8B3B",
+    "secondary": "#44D3D1",
+    "links": "#B1CD3C"
+  }
+},
+            fonts: {"titleFontId":4,"generalFontId":4,"titleSize":32,"descriptionSize":19,"servicesSize":12,"titleFontIsEmbed":false,"generalFontIsEmbed":false},
+            titleFont: {"id":4,"appliesTo":"title","faceName":"Times New Roman","defaultSize":60,"isEmbed":false},
+            generalFont: {"id":4,"appliesTo":"title","faceName":"Times New Roman","defaultSize":60,"isEmbed":false},
+            fontControls:
+            {
+                title: {reset: '.ss-title', apply: '.ss-title' },
+                description: {reset: '.ss-description', apply: '.ss-description' },
+                services: {reset: '.ss-service', apply: '.ss-service'},
+                block: {reset: '.ss-block, #ss-widgetContainer', apply: '.ss-block, #ss-widgetContainer' }
+            },
+            styleControls:
+            {
+                // Page background
+                background: {reset: '#ss-background', apply: '#ss-background' },
+                title: {reset: '.ss-title', apply: '.ss-title', borders: {reset: '#ss-launcher li', apply: '#ss-launcher li'} },
+                description: {reset: '.ss-description', apply: '.ss-description' },
+                services: {reset: '.ss-service', apply: '.ss-service', borders: {reset: '.accordion-arrow-inheritor, .accordion-button', apply: '.accordion-arrow-inheritor, .accordion-button'}},
+                block: {
+                  reset: '.ss-block, #ss-widgetContainer', 
+                  apply: '.ss-block, #ss-widgetContainer, .modal-widget',
+                  foreground: { apply: '.contrast' } 
+                },
+                // Widget text
+                primary: {
+                  reset: '.widget-container .title-bar, .widget-container .text-highlight, .widget-instance h1, .widget-instance h2, .widget-instance h3, .widget-instance h4, .widget-instance h5, .widget-instance h6, .modal-widget .title-bar, .modal-widget .text-highlight, .modal-widget h1, .modal-widget h2, .modal-widget h3, .modal-widget h4, .modal-widget h5, .modal-widget h6', 
+                  apply: '.widget-container .title-bar, .widget-container .text-highlight, .widget-instance h1, .widget-instance h2, .widget-instance h3, .widget-instance h4, .widget-instance h5, .widget-instance h6, .modal-widget .title-bar, .modal-widget .text-highlight, .modal-widget h1, .modal-widget h2, .modal-widget h3, .modal-widget h4, .modal-widget h5, .modal-widget h6'
+                },
+                secondary: {
+                  reset: '.widget-instance, .widget-instance div:not(.watermark, .charCounter, .text-highlight, .contrast, .error, .form-errors, .required, :isThirdPartyInclude), .widget-instance span:not(.watermark, .charCounter, .text-highlight, .contrast, .error, .form-errors, .required, :isThirdPartyInclude), .widget-instance li, .widget-instance p, .modal-widget, .modal-widget div:not(.watermark, .charCounter), .modal-widget li, .modal-widget span:not(.text-highlight,.contrast), .modal-widget p', 
+                  apply: '.widget-instance, .widget-instance div:not(.watermark, .charCounter, .text-highlight, .contrast, .error, .form-errors, .required, :isThirdPartyInclude), .widget-instance span:not(.watermark, .charCounter, .text-highlight, .contrast, .error, .form-errors, .required, :isThirdPartyInclude), .widget-instance li, .widget-instance p, .modal-widget, .modal-widget div:not(.watermark, .charCounter), .modal-widget li, .modal-widget span:not(.text-highlight,.welcome-subtitle,.contrast), .modal-widget p',
+                  background: { apply: '.contrast, .speech-balloon-tail' },
+                  borders: { apply: '.speech-balloon-tail' }
+                },
+                //main: { reset: '#ss-launcher, .modal-widget', apply: '.modal-widget, .layout3-c #ss-launcher, .layout2-c #ss-launcher, .layout2-l #ss-launcher, .layout2-r #ss-launcher' }, //'.ss-main, .layout3-c #ss-launcher',
+                //meta: { reset: '#ss-main', apply: '.layout1-c #ss-main, .layout1-l #ss-main, .layout1-r #ss-main, .layout4-c #ss-main, .layout4-l #ss-main, .layout4-r #ss-main' }, //'.ss-main, .layout3-c #ss-launcher',
+                main: { reset: '#ss-launcher', apply: '#ss-launcher' },
+                meta: { reset: '#ss-about', apply: '#ss-about' }, //'.ss-main, .layout3-c #ss-launcher',
+                links: { reset: '.modal-widget a', apply: '.widget-instance a:not(.contrast, :isInWidgetConfigPanel, :isThirdPartyInclude), .modal-widget a:not(.welcome-link), a.widget-link', borders: {reset: '.widget-container .title-bar, .widget-container .contrast-border, hr', apply: '.widget-container .title-bar, .widget-container .contrast-border, hr' }},
+                page: { reset: '.ss-background, body', apply: '.ss-background, body' },
+                launcher: { reset: '#ss-launcher', apply: '#ss-launcher' },
+                widgetContainer: { reset: '#ss-widgetContainer', apply: '#ss-widgetContainer' }
+            },
+            siteInfo: {
+                title: "Technology Portage",
+                description: "\nTechnology Portage is a Information Technology services company that specializes in providing technical consulting support to clients. Our success is credited to our consultants strong work ethics and technical excellence\n\nOur team possess years of experience in analyzing, designing and producing technology solutions. Our professionals are not just well versed in technologies but also in applying those key technologies to domain specific areas\n\ninfo@technologyportage.com",
+                domain: "technologyportage.com",
+                showShareLinks: true
+            },
+            shareLinksData: {
+                twitter: { ciCode: '44667', message: "Check out this GoDaddy hosted webpage! http://technologyportage.com.", value:1 },
+                facebook: { ciCode: '44670', value:0 },
+                myspace: { ciCode: '44666', message: "Technology Portage", value:2 },
+                delicious: { ciCode: '44668', message: "Check out this GoDaddy hosted webpage! http://technologyportage.com.", value:3 },
+                stumbleupon: { ciCode: '44669', value:4 }
+            },
+            previewMessageData: [{"appId":"1", message:"<div class=\"preview-warning-info\">This is only a preview. We may still be setting up your domain.</div><div>To get started customizing your site, click <b>Owner Login</b>. After domain setup is complete, view your live site at your domain address.</div><br/><div>Domain address:<br /><a href=\"http://[[domain]]\">[[domain]]</a></div>"}],
+            wstAppName : 'GoDaddy Website Builder',
+            gcWstAppName : 'Websites + Marketing',
+            gDCrossSellISC : 'https://www.godaddy.com/websites/website-builder'
+            
+        });  
+            
+        $ss.showLauncher();
+
+        // display the main container (nav and about) which should be formatted by now
+        $j("#ss-mainContainer").css("visibility", "visible");
+
+        
+            $ss.stage.showShareLinksPanel(true);
+        
+
+        $j("#ss-description").linkify({fontColorParent: '#ss-description', initText: "\nTechnology Portage is a Information Technology services company that specializes in providing technical consulting support to clients. Our success is credited to our consultants strong work ethics and technical excellence\n\nOur team possess years of experience in analyzing, designing and producing technology solutions. Our professionals are not just well versed in technologies but also in applying those key technologies to domain specific areas\n\ninfo@technologyportage.com"});
+        $j("#ss-title").linkify({fontColorParent: '#ss-name', initText: "Technology Portage"}); 
+
+        // show modal dialog if needed.
+        $ss.stage.showPreviewModal();
+    });          
+// ]]></script>
+
+  <script type="text/javascript">// <![CDATA[
+
+    $j(document).ready(function () {
+
+      
+
+      var loginHref = $j("#login-link").attrSafe("href").replace(/&lcid=.*?(&|$)/gi, '&lcid=' + (location.hostname.toLowerCase() == $ss.stage.siteInfo.domain.toLowerCase()));
+      $j("#login-link").attrSafe("href", loginHref);
+    });
+
+  // ]]></script>
+
+  <script type="text/javascript" src="./Technology Portage_files/curl.js.download"></script><link type="text/css" href="./Technology Portage_files/jquery.gd.shareLinks.css" rel="stylesheet"><link rel="stylesheet" type="text/css" _curl_movable="true" href="./Technology Portage_files/sf.core.css"></head>
+
+  <body class="non-admin compliant rslrgd" style="background-color: rgb(149, 9, 8);" data-new-gr-c-s-check-loaded="14.1018.0" data-gr-ext-installed="">
+    
+    <div class="site-wrapper">
+      
+    <img id="ss-background" class="ss-background gd-scaleBackground1" style="position: fixed; background-color: rgb(149, 9, 8); left: 0px; top: -358px; width: 1536px; display: block;" src="./Technology Portage_files/c531aac1-541f-49b7-99b6-9d7f6525023f.jpg">
+    
+      <div id="page" class="page layout3-c"><div id="ss-launcher" style="display: none; background-color: rgb(22, 4, 78); position: fixed;">
+  <ul>
+    <li class="link-home" style="display: inline; border-color: rgb(234, 139, 59);"><a class="ss-service" href="javascript:$ss.hideWidgets();" style="color: rgb(177, 205, 60); font-family: &quot;Times New Roman&quot;; font-size: 12px;">Home</a></li>
+    
+    <li id="menu-affiliate-link" style="display: none; border-color: rgb(234, 139, 59);" class="last">
+        
+    </li>
+  </ul>
+</div>
+        
+<div id="content" style="top: 27px;">
+    <div id="ss-mainContainer" style="visibility: visible;">
+        <div id="ss-main" class="ss-main">
+            
+
+            <div id="ss-about" class="no-launcher" style="background-color: rgb(149, 9, 8);">
+                
+<h1 id="ss-name" class="ss-title" style="zoom: 1; color: rgb(234, 139, 59); font-family: &quot;Times New Roman&quot;; font-size: 32px;">Technology Portage</h1>
+<div id="ss-description" class="ss-description" style="color: rgb(68, 211, 209); font-family: &quot;Times New Roman&quot;; font-size: 19px;"><span></span><br><span>Technology Portage is a Information Technology services company that specializes in providing technical consulting support to clients. Our success is credited to our consultants strong work ethics and technical excellence</span><br><span></span><br><span>Our team possess years of experience in analyzing, designing and producing technology solutions. Our professionals are not just well versed in technologies but also in applying those key technologies to domain specific areas</span><br><span></span><br><span><a target="_blank" style="color: rgb(68, 211, 209);" href="mailto:info@technologyportage.com">info@technologyportage.com</a><span></span></span><br></div>
+
+            </div>
+            
+        </div>
+    </div>
+    <div id="ss-widgetContainer" style="display: none; background-color: rgb(22, 4, 78); font-family: &quot;Times New Roman&quot;;" class="gd-ss-switcher"></div>
+</div>
+        
+<div id="logindisplay">
+     
+	<a href="https://sso.godaddy.com/?realm=idp&amp;app=instant-page&amp;path=login%3fartifact%3d%26domain%3dtechnologyportage.com%26oid%3d%26sd%3d%26lcid%3dTrue%26idpinfo%3dnull%26auto%3dtrue%26source%3d" cicode="41766" id="login-link"></a>
+
+</div>
+<div id="sharePanel" style="top: 27px;" class="gd-shareLinks"><ul><li><a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Ftechnologyportage.com&amp;t=Technology%20Portage" target="_blank" cicode="44670" class="gd-shareLinks-link-facebook gd-shareLinks-link" title="Facebook">Facebook</a></li><li><a href="http://twitter.com/intent/tweet?text=Check%20out%20this%20GoDaddy%20hosted%20webpage!%20http%3A%2F%2Ftechnologyportage.com." target="_blank" cicode="44667" class="gd-shareLinks-link-twitter gd-shareLinks-link" title="Twitter">Twitter</a></li><li><a href="http://www.myspace.com/Modules/PostTo/Pages?c=http://technologyportage.com&amp;t=Technology%20Portage" target="_blank" cicode="44666" class="gd-shareLinks-link-myspace gd-shareLinks-link" title="MySpace">MySpace</a></li><li><a href="http://delicious.com/save?noui=no&amp;v=5&amp;jump=yes&amp;url=http%3A%2F%2Ftechnologyportage.com&amp;title=Technology%20Portage&amp;notes=Check%20out%20this%20GoDaddy%20hosted%20webpage!%20http%3A%2F%2Ftechnologyportage.com." target="_blank" cicode="44668" class="gd-shareLinks-link-delicious gd-shareLinks-link" title="Del.icio.us">Del.icio.us</a></li><li><a href="http://www.stumbleupon.com/submit?url=http://technologyportage.com&amp;title=Technology%20Portage" target="_blank" cicode="44669" class="gd-shareLinks-link-stumbleupon gd-shareLinks-link" title="StumbleUpon">StumbleUpon</a></li></ul></div>
+
+
+  <div class="cross-sell" style="right: -313px;">
+    <div class="blurb">
+      <span class="arrow"></span>
+      <span class="logo"></span>
+      A website created by GoDaddy’s
+       
+      <a class="want-one-link" target="_blank" href="https://www.godaddy.com/websites/website-builder" rel="nofollow"><span><b>Website Builder</b></span></a>
+      
+    </div>
+  </div>
+
+      </div>
+    </div>
+    <script type="text/javascript">'undefined' == typeof _trfd && (window._trfd = []), _trfd.push({ 'tccl.baseHost': 'secureserver.net' }), _trfd.push({ 'ap': 'IPv1' }), _trfd.push({ 'tccl.DataCenter': 'P3'}), _trfd.push({ 'tccl.ServerName': 'P3PWINSTPG006'});</script><script src="./Technology Portage_files/tcc_l.combined.1.0.5.min.js.download" type="text/javascript"></script>
+  
+
+<!-- Version: 1.8.0.0 --></body></html>
